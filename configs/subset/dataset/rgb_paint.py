@@ -1,13 +1,19 @@
 _base_ = [
-    '../_base_/datasets/kitti-3d-3class.py',
+    '../../_base_/datasets/kitti-3d-3class.py',
 ]
 
 point_cloud_range = [0, -39.68, -3, 69.12, 39.68, 1]
+img_norm_cfg = dict(
+    mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
+
 # dataset settings
 data_root = '/dataset/kitti/'
 class_names = ['Pedestrian', 'Cyclist', 'Car']
+
 # PointPillars adopted a different sampling strategies among classes
 db_sampler = dict(
+    type='CcDataBaseSampler',
+    feat_dims=7,
     data_root=data_root,
     info_path=data_root + 'kitti_dbinfos_train.pkl',
     rate=1.0,
@@ -20,12 +26,11 @@ db_sampler = dict(
 # PointPillars uses different augmentation hyper parameters
 train_pipeline = [
     dict(type='LoadPointsFromFile', load_dim=4, use_dim=4),
-    # dict(
-    #     type='LoadPointsFromMultiSweeps',
-    #     sweeps_num=10,
-    #     file_client_args=dict(backend='disk')),
+    dict(type='LoadImageFromFile'),
+    dict(type='Normalize', **img_norm_cfg),
+    dict(type='RGBPointPainting'),
     dict(type='LoadAnnotations3D', with_bbox_3d=True, with_label_3d=True),
-    dict(type='ObjectSample', db_sampler=db_sampler),
+    dict(type='CcObjectSample', db_sampler=db_sampler),
     dict(
         type='ObjectNoise',
         num_try=100,
@@ -68,6 +73,24 @@ test_pipeline = [
 ]
 
 data = dict(
-    train=dict(dataset=dict(pipeline=train_pipeline, classes=class_names)),
-    val=dict(pipeline=test_pipeline, classes=class_names),
-    test=dict(pipeline=test_pipeline, classes=class_names))
+    train=dict(
+        dataset=dict(
+            data_root=data_root,
+            ann_file=data_root + 'kitti_infos_train.pkl',
+            pipeline=train_pipeline,
+            classes=class_names,
+        ),
+    ),
+    val=dict(
+        data_root=data_root,
+        ann_file=data_root + 'kitti_infos_val.pkl',
+        pipeline=test_pipeline,
+        classes=class_names,
+    ),
+    test=dict(
+        data_root=data_root,
+        ann_file=data_root + 'kitti_infos_val.pkl',
+        pipeline=test_pipeline,
+        classes=class_names,
+    ),
+)

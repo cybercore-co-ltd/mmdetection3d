@@ -3,9 +3,15 @@ _base_ = [
 ]
 
 point_cloud_range = [0, -39.68, -3, 69.12, 39.68, 1]
+img_norm_cfg = dict(
+    mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 
 # model settings
 model = dict(
+    voxel_encoder=dict(
+        type='PillarFeatureNet',
+        in_channels=7,
+    ),
     bbox_head=dict(
         type='Anchor3DHead',
         num_classes=1,
@@ -49,8 +55,11 @@ db_sampler = dict(
 
 train_pipeline = [
     dict(type='LoadPointsFromFile', load_dim=4, use_dim=4),
+    dict(type='LoadImageFromFile'),
+    dict(type='Normalize', **img_norm_cfg),
+    dict(type='RGBPointPainting', zero_paint=False),
     dict(type='LoadAnnotations3D', with_bbox_3d=True, with_label_3d=True),
-    dict(type='ObjectSample', db_sampler=db_sampler),
+    dict(type='CcObjectSample', db_sampler=db_sampler),
     dict(
         type='ObjectNoise',
         num_try=100,
@@ -70,6 +79,9 @@ train_pipeline = [
 ]
 test_pipeline = [
     dict(type='LoadPointsFromFile', load_dim=4, use_dim=4),
+    dict(type='LoadImageFromFile'),
+    dict(type='Normalize', **img_norm_cfg),
+    dict(type='RGBPointPainting', zero_paint=False),
     dict(
         type='MultiScaleFlipAug3D',
         img_scale=(1333, 800),
