@@ -4,7 +4,7 @@
 -----
 ## Added features
 
-* Augment input feature from `[x, y, z, r, cx, cy, cz, vx, by]` to `[x, y, z, r, cx, cy, cz, vx, by, R, G, B]` (9 to 12).
+* Augment input feature from `[x, y, z, r, cx, cy, cz, vx, vy]` to `[x, y, z, r, cx, cy, cz, vx, vy, R, G, B]` (9 to 12).
 * Augmented objects, which are sampled from the database during the training, are also painted with RGB.
 * RGB is normalized with mean and std as conventional in ImageNet.
 
