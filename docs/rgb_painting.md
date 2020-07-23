@@ -15,8 +15,8 @@
 |     Model    | Autoscale LR | Total BS |  AP  |                                                           Config                                                          |
 |:------------:|:------------:|:--------:|:----:|:-------------------------------------------------------------------------------------------------------------------------:|
 | PointPillars |              |          | 77.1 |                                                          Baseline                                                         |
-| PointPillars |       x      |    12    | 76.2 | [RGB painting; zero padding to GT-Aug](configs/subset/rgb_paint/hv_pointpillars_secfpn_6x2_80e_kitti-3d-car-rgb_paint.py) |
-| PointPillars |       x      |    12    | 76.5 |        [Zero RGB painting](configs/subset/rgb_paint/hv_pointpillars_secfpn_6x2_80e_kitti-3d-car-rgb_paint_zero.py)        |
-| PointPillars |       x      |    12    | 76.2 | [RGB painting; GT-Aug is also painted](configs/subset/rgb_paint/hv_pointpillars_secfpn_6x2_80e_kitti-3d-car-rgb_paint.py) |
+| PointPillars |       x      |    12    | 76.2 | [RGB painting; zero padding to GT-Aug](../configs/subset/rgb_paint/hv_pointpillars_secfpn_6x2_80e_kitti-3d-car-rgb_paint.py) |
+| PointPillars |       x      |    12    | 76.5 |        [Zero RGB painting](../configs/subset/rgb_paint/hv_pointpillars_secfpn_6x2_80e_kitti-3d-car-rgb_paint_zero.py)        |
+| PointPillars |       x      |    12    | 76.2 | [RGB painting; GT-Aug is also painted](../configs/subset/rgb_paint/hv_pointpillars_secfpn_6x2_80e_kitti-3d-car-rgb_paint.py) |
 
 **Conclusion**: RGB painting does not help the network.
