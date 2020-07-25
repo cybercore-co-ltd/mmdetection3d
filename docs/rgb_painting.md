@@ -20,3 +20,11 @@
 | PointPillars |       x      |    12    | 76.2 | [RGB painting; GT-Aug is also painted](../configs/subset/rgb_paint/hv_pointpillars_secfpn_6x2_80e_kitti-3d-car-rgb_paint.py) |
 
 **Conclusion**: RGB painting does not help the network.
+
+
+-----
+## Visualization
+
+| [![image](../docs/imgs/rgb_paint/image.png)](../docs/imgs/rgb_paint/image.png) | [![image](../docs/imgs/rgb_paint/rgb_painted_point_cloud.png)](../docs/imgs/rgb_paint/rgb_painted_point_cloud.png) |
+|:---:|:---:|
+| Image | RGB-painted point cloud |
